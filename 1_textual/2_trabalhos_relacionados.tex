@@ -1,0 +1,40 @@
+\chapter{Trabalhos Relacionados}
+%%
+%%\textcolor{red}{Linha escalonadores distribuidos: revisao do Wilton}
+%%
+%%MapReduce, Spark, XYZ
+%%Conclusão: a minha ideia é que pode ser usado qualquer escalonador, desde que seja possível representar como microsserviço (stateless).
+%%
+%%\textcolor{red}{Tecer comentários sobre TF: replicas ja foram usadas para contornar falhas. %%\url{https://gkoslovski.github.io/files/ijguc-2019.pdf}}
+%%
+%%Tabela de conclusao. Colunas: 1 ref, 2 foco, 3 container/VM/tarefa. Mostrar que microsservico é uma opção viavel.
+%%
+%%A área de escalonamento possui diversas referencias fortes em diversas áreas. Entretanto, a conteinerização é um termo recente comparado a toda história 
+
+A área de escalonamento de tarefas é estudada a décadas, considera-se um ramo com intersecção em diferentes campos da ciência da computação. Um dos principais fatores que impulsionam a intersecção entre as áreas está na natureza do problema de escalonamento, pois na maioria dos casos resolver um problema de escalonamento reflete em otimizar um problema \textit{NP-difícil}. Dessa forma, na literatura, encontra-se diferentes pesquisas que refletem em soluções heurísticas e refinadas, muitas vezes relacionadas com a área de inteligência artificial. Por se tratar da solução de um problema \textit{np-difícil}, a solução computada basta ser boa o suficiente para um cenário específico, sendo assim, a solução encontrada nem sempre é refletida na ótima global.
+
+Esta seção analisará trabalhos recentes da literatura que possuem relação com escalonamento de contêineres. Por ainda se tratar de um recorte amplo na área de escalonamento, aqui analisou-se diferentes trabalhos que atacam diferentes características, seja relacionado com otimização energética em \textit{data centers} como também trabalhos que buscaram otimizar o desempenho de escalonamento.
+
+\section{Redução do custo energético}
+No trabalho de \citeonline{sureshkumar2017optimizing} os autores propuseram um algoritmo de escalonamento de contêineres, para a tecnologia \textit{docker}, baseado em balanceamento de carga. O algoritmo consiste em um limiar calculado a partir da sobrecarga do \textit{cluster}, o objetivo do limiar é que as cargas dos contêineres não sejam muito altas e baixas. Quando a carga ultrapassa o limiar, um novo contêiner é criado no balanceamento de carga. Por outro lado, quando a carga é muito baixa, o contêiner é destruído com o objetivo de economizar custo energético.
+
+\section{Otimização multi objetivo}
+Em \citeonline{liu2018new} os autores desenvolveram um novo algoritmo de escalonamento de contêineres denominado \textit{multipot}. Neste projeto foi estudado múltiplos critérios para a seleção de um \textit{node} para provisionar o contêiner. O algoritmo considera cinco métricas chaves:
+\begin{enumerate}
+	\item Uso de CPU de cada \textit{node};
+	\item Uso de memória de cada \textit{node};
+	\item Tempo da transmissão da imagem do contêiner na internet;
+	\item Associação entre os contêineres e os \textit{nodes};
+	\item Agrupamento de contêineres.
+\end{enumerate}
+Todas essas métricas foram consideradas, pois, de acordo com os autores, afetam no desempenho das aplicações que estão sendo executadas pelos contêineres. A função objetivo de escalonamento é a otimização da composição de todas as métricas chaves, ou seja, para cada métrica chave é relacionado um escore, esses escores são agrupados em uma função de composição que representa a função objetivo.
+
+Em \citeonline{menouer2019new} foi desenvolvido uma nova estratégia de escalonamento baseado em um algoritmo de decisão multi-critério. A abordagem consiste em escalonar contêineres baseado em três critérios que estão relacionados a todos os \textit{nodes}  que constitui a infraestrutura de nuvem: (1) O número de contêineres em execução; (2) A disponibilidade de CPU; (3) A disponibilidade do espaço de memória.
+
+Em \citeonline{menouer2019power} os autores utilizaram técnicas refinadas de \textit{machine learning} em um ambiente de nuvem para construção de um escalonador de contêineres. O objetivo dessa abordagem é reduzir o consumo energético de infraestruturas de nuvens heterogêneas. O principio corresponde a dois passos denominados (1) aprender e (2) escalonar, que são aplicados a cada novo contêiner que é submetido à plataforma. No passo (1) é estimado o consumo energético de cada \textit{node}, logo, é elencado grupos de \textit{nodes} que formam uma estrutura de nuvem heterogênea em um \textit{cluster} de acordo com o seu consumo energético.
+Já no passo (2), é selecionado o \textit{node} que corresponde  ao menor consumo energético. O algoritmo foi implementado para a plataforma \textit{docker swarm}.
+
+\section{Considerações parciais}
+Está seção elencou alguns do trabalhos encontrados na literatura acerca do tema escalonamento de contêineres. Nota-se que os trabalhos envolvidos possuem definição de parâmetros e métricas de otimização, como por exemplo: consumo energético, desempenho. Por se tratar de um recorte grande na literatura, o tema escalonamento abre espaço para implementação de diferentes soluções para o problema. Todavia, os trabalhos relacionados aqui elencados não consideram o fator escalabilidade, não há nenhuma solução distribuída. A escassez de projetos de escalonamento de contêineres que envolvam o desenvolvimento de uma arquitetura distribuída, é uma das principais motivações para o presente trabalho.
+ 
+

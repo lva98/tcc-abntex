@@ -1,0 +1,26 @@
+\chapter{Conclusão}
+
+Escalonamento é considerado um processo de tomada de decisão, em resumo, no contexto do presente trabalho, o objetivo é alocar contêineres em nós computacionais denominados \textit{nodes} com recursos finito. Há diversos parâmetros a ser considerados, por consequência, é possível alcançar as mais divergentes funções objetivos -- reduzir consumo energético, otimizar utilização de recursos do \textit{data center}. Logo, de maneira geral, os algoritmos de otimização de escalonamento se enquadram na classe \textit{NP-difícil} \cite{ullman1975np}, visto que, a natureza do problema de escalonamento é combinatória.
+
+A explosão da demanda de poder computacional dos \textit{data centers} uniram, ainda mais, as áreas entre escalonamento e sistemas distribuídos. O objetivo desse trabalho, é, a partir da intersecção entre as duas áreas, resolver de forma elegante o problema de escalonamento para \textit{data centers} de larga escala. De acordo com a literatura, \textit{data centers} de larga escala necessitam de componentes internos sofisticados e adaptáveis que lidam com o gerenciamento de centenas de milhares de cargas de trabalho. Assim, a construção de uma arquitetura de escalonamento distribuída, até o momento, é a solução para que as empresas, como \textit{Google} e \textit{Microsoft}, tratem um grande volume de requisições de escalonamento \cite{Wang2019Pigeon, Google2015Borg}.
+
+Ao unir as áreas entre sistemas distribuídos e escalonamento encontra-se quantidade significativa de estudos explorados, entretanto, a intersecção entre essas áreas junto com orquestradores de contêineres é escasso na literatura como visto no Capítulo 3. Este trabalho possui como objetivo suprir essa carência, uma vez que a principal arquitetura de escalonamento encontrada em \textit{data centers} de larga escala, atualmente, é distribuída. Para validação da proposta, os resultados da arquitetura aqui desenvolvida serão comparados com o escalonador padrão do \textit{Kubernetes}. Com isso, objetiva-se chegar no resultado positivo, cujo as métricas de tempo de espera de escalonamento e \textit{makespan} sejam reduzidas. Além disso, haverá um estudo relacionado ao comportamento da métrica de \textit{slowdown} nos dois cenários propostos: escalonamento padrão e distribuído.
+
+
+\section{Trabalhos futuros}
+\noindent
+A seguir é exposto as etapas de desenvolvimento do projeto, considerando em \textbf{\textcolor{green}{verde}} as etapas que já foram concluída no período esperado e em \textbf{preto} as etapas a ser desenvolvidas. 
+
+\begin{enumerate}
+	\item Revisão bibliográfica sobre contêineres e escalonamento;
+	\item Estudo sobre orquestração de contêineres;
+	\item Elaboração teórica do algoritmo de escalonamento proposto;
+	\item Implementação do algoritmo desenvolvido no gerenciador de contêiner;
+	
+	\item Redação TCC-I;
+	\item Ajustes de implementação;
+	\item Desenvolver definições de análise;
+	\item Análise e comparação dos resultados; e
+	\item Redação TCC-II.
+\end{enumerate}
+\input{assets/cronograma.tex}
