@@ -1,26 +1,24 @@
 \chapter{Conclusão}
 
-Escalonamento é considerado um processo de tomada de decisão, em resumo, no contexto do presente trabalho, o objetivo é alocar contêineres em nós computacionais denominados \textit{nodes} com recursos finito. Há diversos parâmetros a ser considerados, por consequência, é possível alcançar as mais divergentes funções objetivos -- reduzir consumo energético, otimizar utilização de recursos do \textit{data center}. Logo, de maneira geral, os algoritmos de otimização de escalonamento se enquadram na classe \textit{NP-difícil} \cite{ullman1975np}, visto que, a natureza do problema de escalonamento é combinatória.
+O escalonamento é considerado um processo de tomada de decisão que está presente em diversos ramos. No contexto desse trabalho, o objetivo é escalonar contêineres em nós computacionais com recursos computacionais finitos. 
+Por se tratar de um problema de classe \textit{NP-difícil}~\cite{ullman1975np}, não há algoritmo escalável que resolva o escalonamento de forma ótima, abrindo espaço para soluções baseadas em heurísticas e implementações de diferentes arquiteturas. Na Seção 2.5, Trabalhos Relacionados, foram discutidos alguns projetos de escalonadores de contêineres, entretanto, nenhum considerou a criação de um sistema distribuído. Logo, o presente trabalho, guiado pelo Capítulo 3, visou o desenvolvimento de um escalonador distribuído em microsserviços e tolerante a falhas. Para isso, o escalonador proposto utilizou técnicas de balanceamento de carga, eleição por meio de \textit{Locks Distribuídos} e utilização da abordagem \textit{stateless} no componente responsável pelo escalonamento.  A abordagem de escalonamento distribuída, até o momento, é a solução adotada por empresas, como \textit{Google} e \textit{Microsoft}, para tratarem grande volumes de requisições de escalonamento~\cite{Wang2019Pigeon, Google2015Borg}. 
+Especificamente, \textit{Data Centers} de larga escala necessitam de componentes internos sofisticados e adaptáveis que lidam com o gerenciamento de centenas de milhares de cargas de trabalhos, demandando de alguma técnica de alta disponibilidade, pois um pequeno tempo que o processo de escalonamento não está em execução já o suficiente para degradar uma quantidade elevada de métricas, como visto no Capítulo 4.
 
-A explosão da demanda de poder computacional dos \textit{data centers} uniram, ainda mais, as áreas entre escalonamento e sistemas distribuídos. O objetivo desse trabalho, é, a partir da intersecção entre as duas áreas, resolver de forma elegante o problema de escalonamento para \textit{data centers} de larga escala. De acordo com a literatura, \textit{data centers} de larga escala necessitam de componentes internos sofisticados e adaptáveis que lidam com o gerenciamento de centenas de milhares de cargas de trabalho. Assim, a construção de uma arquitetura de escalonamento distribuída, até o momento, é a solução para que as empresas, como \textit{Google} e \textit{Microsoft}, tratem um grande volume de requisições de escalonamento \cite{Wang2019Pigeon, Google2015Borg}.
+No Capítulo 5, Análise de Resultados, foi explorada a eficiência da abordagem de escalonamento proposta neste trabalho. No contexto dos testes, foram desenvolvidos 3 cenários diferentes para comparar os escalonadores do \textit{Kubernetes} e o \ac{KMS}. Nos dois últimos cenários, Moderado e Intenso, o escalonador proposto desempenhou como o esperado, lidando bem com o escalonamento mesmo em situação com intenso volume de falhas, não permitindo que os erros degradassem as métricas de desempenho, como aconteceu com os escalonadores padrões do \textit{Kubernetes}.
 
-Ao unir as áreas entre sistemas distribuídos e escalonamento encontra-se quantidade significativa de estudos explorados, entretanto, a intersecção entre essas áreas junto com orquestradores de contêineres é escasso na literatura como visto no Capítulo 3. Este trabalho possui como objetivo suprir essa carência, uma vez que a principal arquitetura de escalonamento encontrada em \textit{data centers} de larga escala, atualmente, é distribuída. Para validação da proposta, os resultados da arquitetura aqui desenvolvida serão comparados com o escalonador padrão do \textit{Kubernetes}. Com isso, objetiva-se chegar no resultado positivo, cujo as métricas de tempo de espera de escalonamento e \textit{makespan} sejam reduzidas. Além disso, haverá um estudo relacionado ao comportamento da métrica de \textit{slowdown} nos dois cenários propostos: escalonamento padrão e distribuído.
-
+Portanto, a explosão da demanda de poder computacional dos \textit{Data Centers} fazem com que as Nuvens Computacionais necessitem de sistemas complexos de gerenciamento para manter um bom nível de \textit{QoS} de suas plataformas. Dessa forma, este trabalho desenvolveu um escalonador distribuído baseado em microsserviços, que, amparado pelos resultados em cenários de falhas, se enquadra como uma boa alternativa para alta disponibilidade de escalonamento no \textit{Kubernetes}.
 
 \section{Trabalhos futuros}
-\noindent
-A seguir é exposto as etapas de desenvolvimento do projeto, considerando em \textbf{\textcolor{green}{verde}} as etapas que já foram concluída no período esperado e em \textbf{preto} as etapas a ser desenvolvidas. 
+\begin{itemize}
+	\item Para evitar problemas de consistência cada \textit{Worker} é responsável por uma partição disjunta dos nós disponíveis. Sugere-se como melhoria de implementação, no momento em que uma réplica do \textit{Worker} encontrasse indisponível os seus nós sejam adotados pelo restante das réplicas dos \textit{Workers} remanescentes;
+	\item Investigar o impacto das chamadas \textit{HTTP} nas trocas de mensagens entre o \textit{Master} e o \textit{Worker};
+	\item Encontrar o nível de ruptura das abordagens de escalonamento em cenário de falhas. Este número pode ser encontrado aumentando gradativamente a quantidade de falhas até que o escalonador em análise permaneça indisponível;
+	\item Reescrever a implementação em linguagem compilada, isso diminuirá o tempo de criação da imagem dos contêineres do escalonador proposto, logo, diminuição das métricas em cenário de falhas; e
+	\item Reescrever a implementação para utilizar protocolo de troca de mensagem mais leve que o \textit{HTTP}.
+\end{itemize}
 
-\begin{enumerate}
-	\item Revisão bibliográfica sobre contêineres e escalonamento;
-	\item Estudo sobre orquestração de contêineres;
-	\item Elaboração teórica do algoritmo de escalonamento proposto;
-	\item Implementação do algoritmo desenvolvido no gerenciador de contêiner;
-	
-	\item Redação TCC-I;
-	\item Ajustes de implementação;
-	\item Desenvolver definições de análise;
-	\item Análise e comparação dos resultados; e
-	\item Redação TCC-II.
-\end{enumerate}
-\input{assets/cronograma.tex}
+
+%este trabalho visou o desenvolvimento de um escalonador distribuído, baseado em microsserviços,
+%a principal vantagem dessa abordagem é em cenários de falhas. Em que um escalonador monolítico há a perda total do evento de escalonamento, enquanto que o escalonador deste trabalho há perda somente parcial, pois é um conjunto de serviços que 
+%A explosão da demanda de poder computacional dos \textit{data centers} uniram, ainda mais, as áreas entre escalonamento e sistemas distribuídos. O objetivo desse trabalho, é, a partir da interseção entre as duas áreas, propor uma solução distribuída de escalonamento resiliente em cenários de falhas. De acordo com a literatura, \textit{data centers} de larga escala necessitam de componentes internos sofisticados e adaptáveis que lidam com o gerenciamento de centenas de milhares de cargas de trabalho. Assim, a construção de uma arquitetura de escalonamento distribuída, até o momento, é a solução para que as empresas, como \textit{Google} e \textit{Microsoft}, tratem um grande volume de requisições de escalonamento \cite{Wang2019Pigeon, Google2015Borg}.
+%Ao unir as áreas entre sistemas distribuídos e escalonamento encontra-se quantidade significativa de estudos explorados, entretanto, a intersecção entre essas áreas junto com orquestradores de contêineres é escasso na literatura como visto no Capítulo 3. Este trabalho possui como objetivo suprir essa carência, uma vez que a principal arquitetura de escalonamento encontrada em \textit{data centers} de larga escala, atualmente, é distribuída.
